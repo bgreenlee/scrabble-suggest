@@ -19,6 +19,8 @@ This builds the index file. A standard word list is included at `data/words.txt`
         ./scrabble-suggester <letters>
 Lists all the Scrabble words, in order of descending point value, that can be made with the given letters.
 
+To run the tests, just do `go test ./...`
+
 ## Author
 
 Brad Greenlee <brad@footle.org>
