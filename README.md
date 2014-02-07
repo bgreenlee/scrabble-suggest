@@ -38,6 +38,8 @@ Example:
 
 To run the tests, just do `go test ./...`
 
-## Author
+## For the Lawyers
 
-Brad Greenlee <brad@footle.org>
+SCRABBLE® Brand Crossword Game is a registered trademark of Hasbro, Inc. in the United States and Canada.  Outside of the United States and Canada, the SCRABBLE® trademark is owned by J.W. Spear and Sons, PLC, a subsidiary of Mattel, Inc.  SCRABBLE® is not a generic term. All intellectual property rights in and to the game are owned in the U.S.A. by Hasbro, Inc.
+
+Neither GitHub, the scrabble-suggest program, nor its author is in any way sponsored by or otherwise affiliated with Hasbro, Inc.
