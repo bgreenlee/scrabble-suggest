@@ -21,6 +21,8 @@ _testmain.go
 
 *.exe
 
+.DS_Store
+
 # Project-specific
 scrabble-indexer
 scrabble-suggester

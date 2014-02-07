@@ -13,7 +13,7 @@ This will create two executables, `scrabble-indexer` and `scrabble-suggester`
 2. Index:
 
         ./scrabble-indexer <path to word list>
-This builds the index file. A standard word list is included at `data/words.txt`. You can pass it a different word list if you have one. This only needs to be done once (unless you change the word list).
+This builds the index file. A public domain word list is included at `data/word_list_moby_crossword-flat/word_list_moby_crossword.flat.txt`. You can pass it a different word list if you have one. This only needs to be done once (unless you change the word list).
 3. Run:
 
         ./scrabble-suggester <letters>
