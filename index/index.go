@@ -5,11 +5,11 @@ import (
 	"os"
 )
 
-const indexFile = "data/words.idx"
+var IndexFile = "data/words.idx"
 
-// Write out the index file
+// Write serializes the word map to an index file
 func Write(wordMap map[string][]string) (err error) {
-	outputFile, err := os.Create(indexFile)
+	outputFile, err := os.Create(IndexFile)
 	if err != nil {
 		return err
 	}
@@ -17,9 +17,10 @@ func Write(wordMap map[string][]string) (err error) {
 	return gob.NewEncoder(outputFile).Encode(wordMap)
 }
 
+// Read deserializes the index file into a word map
 func Read() (w map[string][]string, err error) {
 	wordMap := make(map[string][]string)
-	inputFile, err := os.Open(indexFile)
+	inputFile, err := os.Open(IndexFile)
 	if err != nil {
 		return nil, err
 	}

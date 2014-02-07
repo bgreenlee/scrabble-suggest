@@ -43,6 +43,35 @@ func calculateScore(word string) int {
 	return score
 }
 
+func Powerset(word string) []string {
+	chars := []byte(word)
+	if len(chars) == 0 {
+		return []string{""}
+	}
+	c, chars := chars[len(chars)-1], chars[:len(chars)-1]
+	subset := Powerset(string(chars))
+	expandedSubset := append(subset, subset...)
+	for i := 0; i < len(expandedSubset)/2; i++ {
+		expandedSubset[i] = expandedSubset[i] + string(c)
+	}
+	return expandedSubset
+}
+
+// FilteredPowerset removes duplicates and elements with len < 2
+func FilteredPowerset(word string) []string {
+	setMap := make(map[string]bool)
+	for _, elem := range Powerset(word) {
+		setMap[elem] = true
+	}
+	list := make([]string, 0)
+	for key := range setMap {
+		if len(key) >= 2 {
+			list = append(list, key)
+		}
+	}
+	return list
+}
+
 // rearrange a word so the letters are in alphabetical order
 func Alphabetize(word string) string {
 	chars := ByChar(word)

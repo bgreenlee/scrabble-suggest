@@ -14,6 +14,24 @@ import (
 	"strings"
 )
 
+// buildWordMap, given a Scanner, reads in the word list and stores each word
+// in a map where the keys are the words with letters in alphabetical order
+// so you get:
+// AET -> [ATE, ETA, TAE, TEA],
+// APST -> [PATS, PAST, TAPS, SPAT],
+func buildWordMap(scanner *bufio.Scanner) map[string][]string {
+	wordMap := make(map[string][]string)
+	for scanner.Scan() {
+		token := strings.ToUpper(scanner.Text())
+		sortedWord := word.Alphabetize(token)
+		wordMap[sortedWord] = append(wordMap[sortedWord], token)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal("Error reading input file:", err)
+	}
+	return wordMap
+}
+
 func main() {
 	var err error
 
@@ -28,22 +46,8 @@ func main() {
 		log.Fatal("Error opening input file:", err)
 	}
 
-	// read in word list and store each word in a map where the keys are the
-	// words with letters in alphabetical order
-	// so you get:
-	// AET -> [ATE, ETA, TAE, TEA],
-	// APST -> [PATS, PAST, TAPS, SPAT],
-	wordMap := make(map[string][]string)
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		token := strings.ToUpper(scanner.Text())
-		sortedWord := word.Alphabetize(token)
-		wordMap[sortedWord] = append(wordMap[sortedWord], token)
-	}
-	if err = scanner.Err(); err != nil {
-		log.Fatal("Error reading input file:", err)
-	}
-
+	wordMap := buildWordMap(scanner)
 	err = index.Write(wordMap)
 	if err != nil {
 		log.Fatal("Error writing index file:", err)

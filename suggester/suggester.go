@@ -11,50 +11,19 @@ import (
 	"strings"
 )
 
-// generate all ordered combinations of query of len >= 2
-func GenerateCombinations(word string) <-chan string {
-	c := make(chan string)
-
-	go func(c chan string) {
-		defer close(c)                 // close the channel once we're finished
-		nextCombination(c, word, 2, 0) // start with two-letter words
-	}(c)
-
-	return c
-}
-
-func nextCombination(c chan string, word string, length int, offset int) {
-	wordLen := len(word)
-
-	if offset > wordLen-length {
-		offset = 0
-		length++
-	}
-
-	if length > wordLen {
-		return
-	}
-
-	c <- word[offset : offset+length]
-	nextCombination(c, word, length, offset+1)
-}
-
-// The above two methods can be replaced with this simple non-recursive method,
-// but I wanted to play with channels
-/*
-func Combinations(word string) []string {
-	wordLen := len(word)
-	combinations := make([]string, wordLen*(wordLen-1)/2)
-	combinationsIdx := 0
-	for len := 2; len <= wordLen; len++ {
-		for i := 0; i <= wordLen-len; i++ {
-			combinations[combinationsIdx] = word[i : i+len]
-			combinationsIdx++
+// findWords, given a query string and a wordMap index, finds all the words
+// in the index that can be made with the letters in the query string
+func findWords(query string, wordMap map[string][]string) []word.Word {
+	query = word.Alphabetize(strings.ToUpper(query))
+	wordList := make([]word.Word, 0)
+	for _, candidate := range word.FilteredPowerset(query) {
+		words := wordMap[candidate]
+		for _, w := range words {
+			wordList = append(wordList, word.New(w))
 		}
 	}
-	return combinations
+	return wordList
 }
-*/
 
 func main() {
 	var err error
@@ -66,7 +35,7 @@ func main() {
 
 	// get and validate query string
 	query := os.Args[1]
-	valid, _ := regexp.MatchString("^[A-Za-z]{2,}$", query)
+	valid, _ := regexp.MatchString("^[A-Za-z_]{2,}$", query)
 	if !valid {
 		fmt.Printf("Error: you must provide 2 or more letters, A-Z\n")
 		os.Exit(1)
@@ -79,14 +48,7 @@ func main() {
 	}
 
 	// find possible words
-	query = word.Alphabetize(strings.ToUpper(query))
-	wordList := make([]word.Word, 0)
-	for candidate := range GenerateCombinations(query) {
-		words := wordMap[candidate]
-		for _, w := range words {
-			wordList = append(wordList, word.New(w))
-		}
-	}
+	wordList := findWords(query, wordMap)
 
 	// display in order of descending point value
 	sort.Sort(sort.Reverse(word.ByScore(wordList)))
