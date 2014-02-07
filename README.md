@@ -18,6 +18,23 @@ This builds the index file. A standard word list is included at `data/words.txt`
 
         ./scrabble-suggester <letters>
 Lists all the Scrabble words, in order of descending point value, that can be made with the given letters.
+Example:
+
+        $ ./scrabble-suggester BRAD
+        BARD (7)
+        DARB (7)
+        DRAB (7)
+        BRAD (7)
+        BAD (6)
+        DAB (6)
+        BRA (5)
+        BAR (5)
+        RAD (4)
+        BA (4)
+        AD (3)
+        DA (3)
+        AR (2)
+
 
 To run the tests, just do `go test ./...`
 
