@@ -50,6 +50,7 @@ func (a ByScore) Len() int           { return len(a) }
 func (a ByScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByScore) Less(i, j int) bool { return a[i].Score < a[j].Score }
 
+// Powerset generates the powerset of strings within the given string
 func Powerset(word string) []string {
 	chars := []rune(word)
 	if len(chars) == 0 {
