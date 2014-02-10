@@ -26,8 +26,7 @@ func findWords(query string, wordMap map[string][]string) []word.Word {
 }
 
 func main() {
-	var err error
-
+	// check commandline args
 	if len(os.Args) != 2 {
 		fmt.Printf("Usage: %s <letters>\n", os.Args[0])
 		os.Exit(1)
@@ -35,7 +34,7 @@ func main() {
 
 	// get and validate query string
 	query := os.Args[1]
-	valid, _ := regexp.MatchString("^[A-Za-z_]{2,}$", query)
+	valid, _ := regexp.MatchString("^[A-Za-z]{2,}$", query)
 	if !valid {
 		fmt.Printf("Error: you must provide 2 or more letters, A-Z\n")
 		os.Exit(1)
