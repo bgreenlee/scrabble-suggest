@@ -43,8 +43,15 @@ func calculateScore(word string) int {
 	return score
 }
 
+// ByScore implements sort.Interface for []Word based on the Score field
+type ByScore []Word
+
+func (a ByScore) Len() int           { return len(a) }
+func (a ByScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByScore) Less(i, j int) bool { return a[i].Score < a[j].Score }
+
 func Powerset(word string) []string {
-	chars := []byte(word)
+	chars := []rune(word)
 	if len(chars) == 0 {
 		return []string{""}
 	}
@@ -79,15 +86,8 @@ func Alphabetize(word string) string {
 	return string(chars)
 }
 
-// ByScore implements sort.Interface for []Word based on the Score field
-type ByScore []Word
-
-func (a ByScore) Len() int           { return len(a) }
-func (a ByScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByScore) Less(i, j int) bool { return a[i].Score < a[j].Score }
-
-// ByChar implements a sort interface for ASCII characters represented by bytes
-type ByChar []byte
+// ByChar implements a sort interface for characters
+type ByChar []rune
 
 func (a ByChar) Len() int           { return len(a) }
 func (a ByChar) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
